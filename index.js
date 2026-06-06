@@ -11,7 +11,9 @@ app.set('trust proxy', 1);
 
 app.use(cors({
   origin: process.env.FRONTEND_URL,
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
 }));
 
 app.use(session({
@@ -19,9 +21,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: process.env.NODE_ENV === 'production',
+    secure: true,
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 1 day
+    sameSite: 'none',   // ← critical for cross-origin cookies
+    maxAge: 24 * 60 * 60 * 1000
   }
 }));
 
