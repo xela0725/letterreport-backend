@@ -8,7 +8,7 @@ const app = express();
 
 // 💡 就是這行！告訴 Express 信任 Render 的反向代理，這樣它就會自動判別並使用 https
 app.set('trust proxy', 1);
-app.options('*', cors()); // ← handle preflight for all routes
+app.options('(.*)', cors()); // ← handle preflight for all routes
 
 app.use(cors({
   origin: process.env.FRONTEND_URL,
